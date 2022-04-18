@@ -1,0 +1,20 @@
+{
+  "name": "daliy-tech",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./2020.3.29.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misakisaysyes/daliy-tech.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/misakisaysyes/daliy-tech/issues"
+  },
+  "homepage": "https://github.com/misakisaysyes/daliy-tech#readme"
+}
