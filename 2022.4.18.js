@@ -1,56 +1,47 @@
-const test = i => {
-    return new Promise((resolve, reject) => {
-      
-            setTimeout(() => {
-                console.log('?', i)
-                if (i > 1) {
-                    reject()
-                } else {
-                    resolve(i) 
-                }
-            }, 1000)
-        
-    })
+const coreAsyncOp =  param => new Promise((resolve, reject) => {
+    let isResolved = Math.random() < 0.95
+    if (isResolved) {
+        resolve(`${param} async op success`)
+    } else {
+        reject(`${param} async op fail`)
+    }
+
+})
+
+
+const pluginA = {
+    open: async (param, ctx) => {
+        ctx['pluginA'] = await coreAsyncOp(`${param} pluginA `)
+    }
 }
 
-const func = async i => {
-    let res = await test(i)
+const pluginB = {
+    open: async (param, ctx) => {
+        ctx['pluginB'] = await coreAsyncOp(`${param} pluginB `)
+    }
 }
 
-let arr = [
-    {
-        open: async i => {
-            let res = await test(i)
-            console.log('open 1', res)
-            return res
-        }
-    },
-    {
-        open: async i => {
-            let res = await test(i)
-            console.log('open 2', res)
-            return res
-        }
-    },
-    {
-        open: async i => {
-            let res = await test(i)
-            console.log('open 3', res)
-            return res
-        }
-    },
-    {
-        open: async i => {
-            let res = await test(i)
-            console.log('open 4', res)
-            return res
-        }
-     },
+const pluginC = {
+    open: async (param, ctx) => {
+        ctx['pluginC'] = await coreAsyncOp(`${param} pluginC `)
+    }
+}
+
+const pluginD = {
+    open: async (param, ctx) => {
+        ctx['pluginD'] = await coreAsyncOp(`${param} pluginD `)
+    }
+}
+
+const app = [
+    pluginA,
+    pluginB,
+    pluginC,
+    pluginD
 ]
 
-let ctx = 1
-arr.reduce((m, p) => m.then(v => Promise.all([...v, Promise.resolve().then(() => p.open(ctx)).then(res => {
-    console.log(res, v)
-    ctx += res
-    return v.reduce((a, b) => a + b, res)
-}, err => { console.log('err', err)})])), Promise.resolve([]))
+let ctx = {}
+app.reduce((pre, cur) => pre.then(arr => Promise.all([...arr, cur.open('app', ctx).then(() => {})])), Promise.resolve([]))
+setTimeout(() => console.log('results', ctx), 1024)
+
+// ref： https://es6.ruanyifeng.com/#docs/promise#Promise-resolve
