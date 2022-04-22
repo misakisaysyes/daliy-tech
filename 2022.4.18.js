@@ -44,4 +44,4 @@ let ctx = {}
 app.reduce((pre, cur) => pre.then(arr => Promise.all([...arr, cur.open('app', ctx).then(() => {})])), Promise.resolve([]))
 setTimeout(() => console.log('results', ctx), 1024)
 
-// ref： https://es6.ruanyifeng.com/#docs/promise#Promise-resolve
+// ref： https://es6.ruanyifeng.com/#docs/promise
