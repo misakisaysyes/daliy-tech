@@ -59,8 +59,12 @@ class EventBus {
     }
 
     // 绑定事件执行一次
-    once() {
-        
+    once(k, fn) {
+        const wrapper = (...args) => {
+            this.off(k, wrapper);
+            fn(...args);
+        }
+        this.on(k, wrapper);
     }
 }
 
@@ -71,7 +75,12 @@ function test1(param) {
 function test2(param1, param2) {
     console.log('test2', param1, param2);
 }
-bus.on('test', test1);
-bus.on('test', test2);
-bus.emit('test', 1, 2);
-
+function testOnce(p1, p2, p3) {
+    console.log(p1, p2, p3);
+}
+// bus.on('test', test1);
+// bus.on('test', test2);
+// bus.emit('test', 1, 2);
+bus.once('testOnce', testOnce);
+bus.emit('testOnce', 1, 2, 3);
+bus.emit('testOnce', 1, 2, 3, 4);
