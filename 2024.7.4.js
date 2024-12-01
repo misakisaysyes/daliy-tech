@@ -13,7 +13,7 @@ const rpcWrapper = (rpc) => {
     const concurrencyMap = new Map(); // 并发请求数组
 
     const _rpc_ = (url, params) => {
-        const idx = concurrencyArray.length;
+        const idx = concurrencyMap.size();
         // 并发请求有空位
         if (idx < 10) {
             const p = rpc(url, params);
@@ -37,3 +37,5 @@ const limitRpc = rpcWrapper(rpc);
 for(let i = 0; i < 100; i++) {
     rpc('url'+i, {}).then(res => console.log(res));
 }
+
+// 有限制的并发方案 => 递归查询

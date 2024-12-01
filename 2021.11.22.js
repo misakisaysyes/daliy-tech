@@ -14,9 +14,7 @@ const testRequest = data => {
     })
 }
 
-// 知耕
-// 正心诚意格物致知，躬行臻善创造价值
-
+// zhigeng 正心诚意格物致知，躬耕臻善创造价值
 // const limitRequests = (dataArr, request, maxReq) => {
 //     const pool = dataArr.splice(0, maxReq).map((data, idx) => {
 //         return request(data)
@@ -37,14 +35,12 @@ const testRequest = data => {
 //             })
 //         }
 // }
-
 // limitRequests(dataArr, testRequest, 3)
 
 
 //  一道面试题 并发控制引发的思考🤔
 // promise并发 控制   并行、串行、并发
 // tabable 库
-
 let data = dataArr.shift()
 do {
     let p = new Promise((resolve, reject) => {
